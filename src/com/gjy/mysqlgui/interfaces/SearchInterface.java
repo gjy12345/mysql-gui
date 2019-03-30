@@ -32,6 +32,7 @@ public class SearchInterface extends BaseJframe {
         this.splitTopBottom();
         this.setVisible(true);
         sqlInput.requestFocus();
+        sqlInput.setLineWrap(true);
         this.setTitle("查询");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);//修改为关闭隐藏
     }
