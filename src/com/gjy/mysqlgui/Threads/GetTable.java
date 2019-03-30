@@ -28,7 +28,7 @@ public class GetTable extends Thread {
         Connection connection=null;
         try {
             connection= Dbutil.getConnection(dbName);
-            PreparedStatement ps=connection.prepareStatement("select * from "+tbName+" limit 1,100;");
+            PreparedStatement ps=connection.prepareStatement("select * from "+tbName+" limit 0,100;");
 //            System.out.println("table:"+tbName);
 //            ps.setString(1,tbName);
             ResultSet rs=ps.executeQuery();
