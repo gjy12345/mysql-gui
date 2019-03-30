@@ -45,7 +45,7 @@ public class GetResult extends Thread {
                     ArrayList<String[]> rows;
                     String head[]=new String[rmd.getColumnCount()];
                     for(int i=1;i<=rmd.getColumnCount();i++){
-                        head[i-1]=rmd.getColumnName(i);
+                        head[i-1]=rmd.getColumnLabel(i);
                     }
                     rows=new TableDaoImp().getRows(head,rs);
                     resultInterface.add(new ResultInterface(head,rows,"共"+rows.size()+"结果"));
