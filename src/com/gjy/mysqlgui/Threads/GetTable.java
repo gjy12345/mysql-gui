@@ -35,7 +35,7 @@ public class GetTable extends Thread {
             ResultSetMetaData rmd=rs.getMetaData();
             String title[]=new String[rmd.getColumnCount()];
             for(int i=1,count=rmd.getColumnCount();i<=count;i++){
-                title[i-1]=rmd.getColumnName(i);
+                title[i-1]=rmd.getColumnLabel(i);
             }
             DefaultTableModel dftm=new DefaultTableModel();
             jTable=new JTable(dftm);
