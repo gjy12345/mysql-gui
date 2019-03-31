@@ -37,25 +37,31 @@ public class GetResult extends Thread {
             resultInterface=new ArrayList<>();
             connection=Dbutil.getConnection(dbName);
             Statement statement=connection.createStatement();
-            String sqls[]=sql.split(";");
-            for(String s:sqls){//多条sql
-                if(statement.execute(s)){
-                    ResultSet rs=statement.getResultSet();
+            boolean result=statement.execute(sql);
+            ResultSet rs;
+            while(true) {
+                if(result) {
+                    rs=statement.getResultSet();
                     ResultSetMetaData rmd=rs.getMetaData();
                     ArrayList<String[]> rows;
                     String head[]=new String[rmd.getColumnCount()];
                     for(int i=1;i<=rmd.getColumnCount();i++){
-                        head[i-1]=rmd.getColumnLabel(i);
+                        head[i-1]=rmd.getColumnLabel(i);//修改获取表标题不一致
                     }
                     rows=new TableDaoImp().getRows(head,rs);
                     resultInterface.add(new ResultInterface(head,rows,"共"+rows.size()+"结果"));
                 }else {
                     int count=statement.getUpdateCount();
-                    if(!info.isVisible()){
-                        info.setVisible(true);
+                    if(count!=-1){
+                        jTextArea.append(count+"行受影响"+"\n");
+                        if(!info.isVisible()){
+                            info.setVisible(true);
+                        }
                     }
-                    jTextArea.append(count+"行受影响"+"\n");
+                    else
+                        break;
                 }
+                result=statement.getMoreResults();//获取下一个结果 返回结果集 true 条数 false 当返回false 并且 结果集为-1 结束
             }
         } catch (SQLException e) {
             if(!info.isVisible()){
